@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ecomarket-ai | Tu Radar Financiero Cognitivo - Próximamente</title>
+  <meta name="description" content="IA que combina análisis de mercados con psicología del inversor. Entiende qué pasa, por qué pasa, y cómo encaja con tu forma de decidir."/>
+  
+  <!-- Fuentes Google -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  
+  <style>
+    :root {
+      --bg-primary: #0a0e1a;
+      --bg-secondary: #111827;
+      --bg-card: #1f2937;
+      --accent-cyan: #06b6d4;
+      --accent-purple: #8b5cf6;
+      --accent-gradient: linear-gradient(135deg, #06b6d4 0%, #8b5cf6 100%);
+      --text-primary: #f9fafb;
+      --text-secondary: #9ca3af;
+      --border-color: #374151;
+      --success: #10b981;
+    }
+
+    * { 
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box; 
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Animación de fondo */
+    .bg-animation {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: 
+        radial-gradient(circle at 20% 50%, rgba(6, 182, 212, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    /* Header */
+    header {
+      padding: 2rem 5%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-bottom: 1px solid var(--border-color);
+      background: rgba(17, 24, 39, 0.8);
+      backdrop-filter: blur(10px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-weight: 700;
+      font-size: 1.5rem;
+    }
+
+    .logo-svg {
+      width: 48px;
+      height: 48px;
+    }
+
+    .logo-text {
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    /* Hero Section */
+    .hero {
+      min-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 4rem 5%;
+      position: relative;
+    }
+
+    .badge {
+      background: rgba(6, 182, 212, 0.15);
+      color: var(--accent-cyan);
+      padding: 0.5rem 1.25rem;
+      border-radius: 100px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      margin-bottom: 2rem;
+      border: 1px solid rgba(6, 182, 212, 0.3);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+
+    .hero h1 {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+      font-weight: 800;
+      margin-bottom: 1.5rem;
+      line-height: 1.1;
+      max-width: 900px;
+    }
+
+    .hero h1 .gradient-text {
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1.125rem, 2vw, 1.5rem);
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+      max-width: 700px;
+      font-weight: 400;
+    }
+
+    .hero-description {
+      font-size: 1.125rem;
+      color: var(--text-secondary);
+      margin-bottom: 3rem;
+      max-width: 650px;
+      line-height: 1.7;
+    }
+
+    /* Logo Grande Animado */
+    .logo-showcase {
+      margin: 3rem 0;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+    }
+
+    .logo-showcase svg {
+      width: clamp(150px, 30vw, 250px);
+      height: auto;
+      filter: drop-shadow(0 20px 40px rgba(6, 182, 212, 0.3));
+    }
+
+    /* Email Form */
+    .signup-section {
+      background: var(--bg-secondary);
+      border: 2px solid var(--border-color);
+      border-radius: 16px;
+      padding: 2.5rem;
+      max-width: 600px;
+      width: 100%;
+      margin: 2rem auto;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+
+    .signup-section h2 {
+      font-size: 1.5rem;
+      margin-bottom: 0.75rem;
+      text-align: center;
+    }
+
+    .signup-section p {
+      color: var(--text-secondary);
+      text-align: center;
+      margin-bottom: 1.5rem;
+      font-size: 0.95rem;
+    }
+
+    .signup-form {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .signup-form input {
+      flex: 1;
+      min-width: 250px;
+      padding: 1rem 1.25rem;
+      border: 2px solid var(--border-color);
+      border-radius: 10px;
+      background: var(--bg-card);
+      color: var(--text-primary);
+      font-size: 1rem;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+
+    .signup-form input:focus {
+      outline: none;
+      border-color: var(--accent-cyan);
+      box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.1);
+    }
+
+    .signup-form input::placeholder { 
+      color: var(--text-secondary); 
+    }
+
+    .signup-form button {
+      padding: 1rem 2rem;
+      background: var(--accent-gradient);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      white-space: nowrap;
+      box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3);
+    }
+
+    .signup-form button:hover { 
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(6, 182, 212, 0.4);
+    }
+
+    .signup-form button:active {
+      transform: translateY(0);
+    }
+
+    .signup-form small {
+      width: 100%;
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      margin-top: 1rem;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    /* Features */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      max-width: 1100px;
+      margin: 4rem auto;
+      padding: 0 5%;
+      width: 100%;
+    }
+
+    .feature-card {
+      background: var(--bg-secondary);
+      padding: 2rem;
+      border-radius: 16px;
+      border: 1px solid var(--border-color);
+      text-align: left;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: var(--accent-gradient);
+      transform: scaleX(0);
+      transition: transform 0.3s;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--accent-cyan);
+      box-shadow: 0 10px 40px rgba(6, 182, 212, 0.15);
+    }
+
+    .feature-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .feature-icon {
+      width: 56px;
+      height: 56px;
+      background: var(--accent-gradient);
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      font-size: 1.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .feature-card h3 {
+      font-size: 1.25rem;
+      margin-bottom: 0.75rem;
+      font-weight: 600;
+    }
+
+    .feature-card p {
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    /* Timeline */
+    .timeline {
+      max-width: 800px;
+      margin: 4rem auto;
+      padding: 0 5%;
+      text-align: center;
+    }
+
+    .timeline h2 {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .timeline-items {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .timeline-item {
+      background: var(--bg-secondary);
+      padding: 1.5rem;
+      border-radius: 12px;
+      border: 1px solid var(--border-color);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      text-align: left;
+    }
+
+    .timeline-icon {
+      font-size: 2rem;
+      flex-shrink: 0;
+    }
+
+    .timeline-content h4 {
+      font-size: 1.1rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .timeline-content p {
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+
+    .timeline-badge {
+      margin-left: auto;
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--success);
+      padding: 0.25rem 0.75rem;
+      border-radius: 100px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+
+    /* Footer */
+    footer {
+      padding: 3rem 5%;
+      text-align: center;
+      border-top: 1px solid var(--border-color);
+      margin-top: 4rem;
+      background: var(--bg-secondary);
+    }
+
+    footer p {
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      margin: 0.5rem 0;
+    }
+
+    footer a { 
+      color: var(--accent-cyan); 
+      text-decoration: none; 
+      transition: opacity 0.2s;
+    }
+
+    footer a:hover { 
+      opacity: 0.8;
+      text-decoration: underline; 
+    }
+
+    .disclaimer {
+      margin-top: 1.5rem;
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+      opacity: 0.7;
+      line-height: 1.5;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin: 1.5rem 0;
+    }
+
+    .social-links a {
+      width: 40px;
+      height: 40px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 1.25rem;
+      transition: all 0.2s;
+    }
+
+    .social-links a:hover {
+      background: var(--accent-cyan);
+      border-color: var(--accent-cyan);
+      transform: translateY(-3px);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2.25rem; }
+      .signup-form { flex-direction: column; }
+      .signup-form button { width: 100%; }
+      .features { grid-template-columns: 1fr; }
+      .timeline-item { flex-direction: column; text-align: center; }
+      .timeline-badge { margin-left: 0; margin-top: 0.5rem; }
+    }
+
+    /* Success message */
+    .success-message {
+      display: none;
+      background: rgba(16, 185, 129, 0.15);
+      border: 2px solid var(--success);
+      border-radius: 12px;
+      padding: 2rem;
+      text-align: center;
+      margin-top: 1rem;
+    }
+
+    .success-message.show {
+      display: block;
+      animation: slideIn 0.3s ease-out;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .success-message h3 {
+      color: var(--success);
+      margin-bottom: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Animación de fondo -->
+  <div class="bg-animation"></div>
+
+  <!-- Header -->
+  <header>
+    <div class="logo">
+      <!-- Logo SVG -->
+      <svg class="logo-svg" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Cerebro -->
+        <path d="M24 4C15.5 4 8.5 10.5 8.5 19c0 5.5 3 10.5 7.5 13.5V38c0 1.1.9 2 2 2h4c1.1 0 2-.9 2-2v-3h4v3c0 1.1.9 2 2 2h4c1.1 0 2-.9 2-2v-5.5c4.5-3 7.5-8 7.5-13.5C43.5 10.5 36.5 4 28 4h-4z" 
+              stroke="url(#gradient)" stroke-width="2" fill="none"/>
+        <!-- Red neuronal -->
+        <circle cx="16" cy="18" r="2" fill="#06b6d4"/>
+        <circle cx="24" cy="14" r="2" fill="#8b5cf6"/>
+        <circle cx="32" cy="20" r="2" fill="#06b6d4"/>
+        <circle cx="20" cy="26" r="2" fill="#8b5cf6"/>
+        <circle cx="28" cy="30" r="2" fill="#06b6d4"/>
+        <line x1="16" y1="18" x2="24" y2="14" stroke="#06b6d4" stroke-width="1.5"/>
+        <line x1="24" y1="14" x2="32" y2="20" stroke="#8b5cf6" stroke-width="1.5"/>
+        <line x1="20" y1="26" x2="28" y2="30" stroke="#06b6d4" stroke-width="1.5"/>
+        <!-- Flecha ascendente -->
+        <path d="M14 34l10-10 4 4 8-8" stroke="url(#gradient)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <defs>
+          <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#06b6d4"/>
+            <stop offset="100%" style="stop-color:#8b5cf6"/>
+          </linearGradient>
+        </defs>
+      </svg>
+      <span class="logo-text">ecomarket-ai</span>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <main class="hero">
+    <div class="badge">
+      <span>🚀</span>
+      <span>Lanzamiento Q2 2026</span>
+    </div>
+
+    <!-- Logo Grande Animado -->
+    <div class="logo-showcase">
+      <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Cerebro -->
+        <path d="M100 20C62 20 31 49 31 87c0 24.5 13.5 47 34 60v22c0 5 4 9 9 9h18c5 0 9-4 9-9v-13h18v13c0 5 4 9 9 9h18c5 0 9-4 9-9v-25c20.5-13 34-35.5 34-60 0-38-31-67-69-67h-18z" 
+              stroke="url(#gradient2)" stroke-width="4" fill="none" stroke-linecap="round"/>
+        <!-- Red neuronal -->
+        <circle cx="64" cy="80" r="6" fill="#06b6d4"/>
+        <circle cx="100" cy="64" r="6" fill="#8b5cf6"/>
+        <circle cx="136" cy="88" r="6" fill="#06b6d4"/>
+        <circle cx="82" cy="116" r="6" fill="#8b5cf6"/>
+        <circle cx="118" cy="136" r="6" fill="#06b6d4"/>
+        <line x1="64" y1="80" x2="100" y2="64" stroke="#06b6d4" stroke-width="3"/>
+        <line x1="100" y1="64" x2="136" y2="88" stroke="#8b5cf6" stroke-width="3"/>
+        <line x1="82" y1="116" x2="118" y2="136" stroke="#06b6d4" stroke-width="3"/>
+        <line x1="64" y1="80" x2="82" y2="116" stroke="#8b5cf6" stroke-width="2"/>
+        <line x1="136" y1="88" x2="118" y2="136" stroke="#06b6d4" stroke-width="2"/>
+        <!-- Flecha ascendente -->
+        <path d="M50 150l40-40 16 16 32-32" stroke="url(#gradient2)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+        <defs>
+          <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#06b6d4"/>
+            <stop offset="100%" style="stop-color:#8b5cf6"/>
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+
+    <h1>
+      Entiende el mercado.<br/>
+      <span class="gradient-text">Entiéndete a ti mismo.</span>
+    </h1>
+    
+    <p class="hero-subtitle">
+      Tu Radar Financiero Cognitivo
+    </p>
+
+    <p class="hero-description">
+      IA que combina análisis de mercados con psicología del inversor. 
+      Descubre <strong>qué</strong> está pasando, <strong>por qué</strong> está pasando, 
+      y cómo encaja con <strong>tu forma única de decidir</strong>.
+    </p>
+
+    <!-- Formulario de captura -->
+    <div class="signup-section">
+      <h2>🎯 Sé de los primeros</h2>
+      <p>Únete a la lista de espera y recibe acceso anticipado + 50% de descuento</p>
+      
+      <form class="signup-form" id="waitlistForm">
+        <input 
+          type="email" 
+          placeholder="tu@email.com" 
+          required 
+          aria-label="Tu correo electrónico"
+        />
+        <button type="submit">Quiero acceso anticipado</button>
+        <small>
+          <span>🔒</span>
+          <span>Sin spam. Solo actualidades importantes. Cancela cuando quieras.</span>
+        </small>
+      </form>
+
+      <div class="success-message" id="successMessage">
+        <h3>✅ ¡Bienvenido a bordo!</h3>
+        <p>Te hemos añadido a la lista de espera. Te avisaremos antes que nadie del lanzamiento.</p>
+      </div>
+    </div>
+
+    <!-- Features -->
+    <div class="features">
+      <div class="feature-card">
+        <div class="feature-icon">🧠</div>
+        <h3>Perfil Cognitivo IA</h3>
+        <p>Descubre tus sesgos financieros ocultos y recibe alertas personalizadas para tomar mejores decisiones, no impulsivas.</p>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon">🔗</div>
+        <h3>Correlaciones Ocultas</h3>
+        <p>Conexiones entre activos, noticias y macroeconomía que nadie te muestra. Detecta patrones antes que el mercado.</p>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon">🎮</div>
+        <h3>Simulador What-If</h3>
+        <p>Prueba escenarios sin arriesgar un euro: "¿Qué pasa si la inflación sube al 5%?" o "¿Y si hay crisis geopolítica?"</p>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon">📊</div>
+        <h3>Alertas Inteligentes</h3>
+        <p>No solo te dice QUÉ pasa, sino POR QUÉ pasa y cómo afecta a TU cartera específicamente.</p>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon">🛡️</div>
+        <h3>Protección Conductual</h3>
+        <p>La IA detecta cuando vas a operar por emoción y te avisa: "Espera 24h. Tu historial muestra que así pierdes menos."</p>
+      </div>
+      
+      <div class="feature-card">
+        <div class="feature-icon">📈</div>
+        <h3>Sin Ejecución Automática</h3>
+        <p>Tú mantienes el control. Solo análisis, educación y autoconocimiento. Sin consejo financiero regulado.</p>
+      </div>
+    </div>
+
+    <!-- Timeline -->
+    <div class="timeline">
+      <h2>🗓️ Roadmap de Lanzamiento</h2>
+      <div class="timeline-items">
+        <div class="timeline-item">
+          <span class="timeline-icon">✅</span>
+          <div class="timeline-content">
+            <h4>Landing Page Activa</h4>
+            <p>Captando early adopters</p>
+          </div>
+          <span class="timeline-badge">COMPLETADO</span>
+        </div>
+        
+        <div class="timeline-item">
+          <span class="timeline-icon">🔧</span>
+          <div class="timeline-content">
+            <h4>Desarrollo del MVP</h4>
+            <p>Motor de correlaciones + perfil cognitivo</p>
+          </div>
+          <span class="timeline-badge">EN PROGRESO</span>
+        </div>
+        
+        <div class="timeline-item">
+          <span class="timeline-icon">🧪</span>
+          <div class="timeline-content">
+            <h4>Beta Cerrada</h4>
+            <p>Acceso para lista de espera (Q2 2026)</p>
+          </div>
+        </div>
+        
+        <div class="timeline-item">
+          <span class="timeline-icon">🚀</span>
+          <div class="timeline-content">
+            <h4>Lanzamiento Público</h4>
+            <p>Disponible para todos con planes desde $99/año</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="social-links">
+      <a href="#" aria-label="Twitter">𝕏</a>
+      <a href="#" aria-label="LinkedIn">in</a>
+      <a href="#" aria-label="GitHub">⌘</a>
+    </div>
+    
+    <p>© 2026 ecomarket-ai. Todos los derechos reservados.</p>
+    <p>
+      <a href="#">Privacidad</a> · 
+      <a href="#">Términos</a> · 
+      <a href="#">Contacto</a>
+    </p>
+    
+    <p class="disclaimer">
+      <strong>⚠️ Aviso Legal:</strong> ecomarket-ai es una herramienta educativa de análisis financiero y autoconocimiento. 
+      No ejecuta operaciones, no gestiona dinero, no ofrece consejo financiero regulado. 
+      Las decisiones de inversión son responsabilidad exclusiva del usuario. 
+      Rentabilidades pasadas no garantizan resultados futuros.
+    </p>
+  </footer>
+
+  <!-- Script para el formulario -->
+  <script>
+    document.getElementById('waitlistForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const email = e.target.querySelector('input[type="email"]').value;
+      const button = e.target.querySelector('button');
+      const originalText = button.textContent;
+      
+      // Animación de carga
+      button.textContent = '⏳ Procesando...';
+      button.disabled = true;
+      
+      try {
+        // Aquí conectarás con tu backend o servicio de email
+        // Por ahora, simulamos éxito:
+        
+        // Guardar en localStorage para analytics básico
+        const waitlistData = {
+          email: email,
+          date: new Date().toISOString(),
+          source: 'landing_page'
+        };
+        
+        // Simular delay de red
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        
+        // Guardar localmente (después irá a tu BD)
+        const existing = JSON.parse(localStorage.getItem('ecomarket_waitlist') || '[]');
+        existing.push(waitlistData);
+        localStorage.setItem('ecomarket_waitlist', JSON.stringify(existing));
+        
+        // Mostrar mensaje de éxito
+        document.getElementById('successMessage').classList.add('show');
+        
+        // Ocultar formulario
+        e.target.style.display = 'none';
+        
+        // Analytics básico (puedes conectar con Plausible, Google Analytics, etc.)
+        console.log('Nuevo registro en waitlist:', waitlistData);
+        
+      } catch (error) {
+        console.error('Error:', error);
+        button.textContent = '❌ Error. Intenta de nuevo';
+        setTimeout(() => {
+          button.textContent = originalText;
+          button.disabled = false;
+        }, 2000);
+      }
+    });
+
+    // Animación suave al hacer scroll
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
