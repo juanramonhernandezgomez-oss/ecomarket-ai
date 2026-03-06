@@ -1,0 +1,32 @@
+services:
+  # Static Site para la Landing Page
+  - type: web
+    name: ecomarket-ai
+    env: static
+    rootDir: frontend
+    buildCommand: ""
+    publishPath: /
+    domains:
+      - ecomarket-ai.es
+      - www.ecomarket-ai.es
+    envVars:
+      - key: NODE_VERSION
+        value: 18
+      - key: PYTHON_VERSION
+        value: 3.11
+    headers:
+      - path: /*
+        name: X-Frame-Options
+        value: SAMEORIGIN
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff
+      - path: /*
+        name: Strict-Transport-Security
+        value: max-age=31536000; includeSubDomains
+    redirects:
+      - source: /*
+        destination: https://www.ecomarket-ai.es/:splat
+        status: 301
+        condition:
+          host: ecomarket-ai.es
