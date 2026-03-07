@@ -1,157 +1,276 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ecomarket-ai | Tu Radar Financiero Cognitivo - Próximamente</title>
-    <meta name="description" content="IA que combina análisis de mercados con psicología del inversor">
-    
-    <!-- Estilos -->
-    <link rel="stylesheet" href="css/styles.css">
-    
-    <!-- 1. LIBRERÍA SUPABASE (CDN) -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ecomarket-ai | Tu Radar Financiero Cognitivo - Próximamente</title>
+  <meta name="description" content="IA que combina análisis de mercados con psicología del inversor. Entiende qué pasa, por qué pasa, y cómo encaja con tu forma de decidir."/>
+  
+  <!-- Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://ecomarket-ai.es/">
+  <meta property="og:title" content="ecomarket-ai | Tu Radar Financiero Cognitivo">
+  <meta property="og:description" content="IA que combina análisis de mercados con psicología del inversor. Detecta sesgos, correlaciones ocultas y simula escenarios.">
+  <meta property="og:image" content="assets/ecomarket-ai-tweet-fijado.png">
+  <meta property="og:site_name" content="ecomarket-ai">
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@ecomarket_ai">
+  <meta name="twitter:creator" content="@ecomarket_ai">
+  <meta name="twitter:url" content="https://ecomarket-ai.es/">
+  <meta name="twitter:title" content="ecomarket-ai | Tu Radar Financiero Cognitivo">
+  <meta name="twitter:description" content="IA que combina análisis de mercados con psicología del inversor. Detecta sesgos, correlaciones ocultas y simula escenarios.">
+  <meta name="twitter:image" content="assets/ecomarket-ai-tweet-fijado.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/ecomarket-ai-avatar.png">
+  
+  <!-- Fuentes Google -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  
+  <!-- Estilos -->
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
-        <nav class="nav container">
-            <a href="index.html" class="logo">ecomarket-ai</a>
-            <div class="nav-links">
-                <a href="login.html" class="btn btn-outline">Iniciar sesión</a>
-                <a href="register.html" class="btn btn-primary">Crear cuenta</a>
-            </div>
-        </nav>
-    </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="badge">🚀 Lanzamiento Q2 2026</div>
-            <h1 class="hero-title">Entiende el mercado.<br>Entiéndete a ti mismo.</h1>
-            <p class="hero-subtitle">Tu Radar Financiero Cognitivo</p>
-            <p class="hero-description">
-                IA que combina análisis de mercados con psicología del inversor. 
-                Descubre qué está pasando, por qué está pasando, y cómo encaja con tu forma única de decidir.
-            </p>
-            
-            <!-- Waitlist Form -->
-            <div class="waitlist-section">
-                <h2 class="waitlist-title">🎯 Sé de los primeros</h2>
-                <p class="waitlist-subtitle">Únete a la lista de espera y recibe acceso anticipado + 50% de descuento</p>
-                
-                <form id="waitlistForm" class="waitlist-form">
-                    <input type="email" placeholder="tu@email.com" required>
-                    <button type="submit" class="btn btn-primary btn-large">Quiero acceso anticipado</button>
-                </form>
-                
-                <div id="successMessage" class="success-message">
-                    <p>✅ ¡Bienvenido a bordo!</p>
-                    <p>Te hemos añadido a la lista de espera. Te avisaremos antes que nadie del lanzamiento.</p>
-                </div>
-                
-                <p class="waitlist-note">🔒 Sin spam. Solo actualidades importantes. Cancela cuando quieras.</p>
-            </div>
+  <!-- Animación de fondo -->
+  <div class="bg-animation"></div>
+
+  <!-- Header -->
+  <header class="header">
+    <nav class="nav">
+      <a href="index.html" class="logo">
+        <svg class="logo-svg" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M24 4C15.5 4 8.5 10.5 8.5 19c0 5.5 3 10.5 7.5 13.5V38c0 1.1.9 2 2 2h4c1.1 0 2-.9 2-2v-3h4v3c0 1.1.9 2 2 2h4c1.1 0 2-.9 2-2v-5.5c4.5-3 7.5-8 7.5-13.5C43.5 10.5 36.5 4 28 4h-4z" 
+                stroke="url(#gradient)" stroke-width="2" fill="none"/>
+          <circle cx="16" cy="18" r="2" fill="#06b6d4"/>
+          <circle cx="24" cy="14" r="2" fill="#8b5cf6"/>
+          <circle cx="32" cy="20" r="2" fill="#06b6d4"/>
+          <path d="M14 34l10-10 4 4 8-8" stroke="url(#gradient)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <defs>
+            <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#06b6d4"/>
+              <stop offset="100%" style="stop-color:#8b5cf6"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <span class="logo-text">ecomarket-ai</span>
+      </a>
+      <div class="nav-links">
+        <a href="login.html" class="btn btn-outline">Iniciar sesión</a>
+        <a href="register.html" class="btn btn-primary">Crear cuenta</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <main class="hero">
+    <div class="container">
+      <div class="badge">
+        <span>🚀</span>
+        <span>Lanzamiento Q2 2026</span>
+      </div>
+
+      <!-- Logo Grande Animado -->
+      <div class="logo-showcase">
+        <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M100 20C62 20 31 49 31 87c0 24.5 13.5 47 34 60v22c0 5 4 9 9 9h18c5 0 9-4 9-9v-13h18v13c0 5 4 9 9 9h18c5 0 9-4 9-9v-25c20.5-13 34-35.5 34-60 0-38-31-67-69-67h-18z" 
+                stroke="url(#gradient2)" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <circle cx="64" cy="80" r="6" fill="#06b6d4"/>
+          <circle cx="100" cy="64" r="6" fill="#8b5cf6"/>
+          <circle cx="136" cy="88" r="6" fill="#06b6d4"/>
+          <circle cx="82" cy="116" r="6" fill="#8b5cf6"/>
+          <circle cx="118" cy="136" r="6" fill="#06b6d4"/>
+          <path d="M50 150l40-40 16 16 32-32" stroke="url(#gradient2)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <defs>
+            <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#06b6d4"/>
+              <stop offset="100%" style="stop-color:#8b5cf6"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+
+      <h1 class="hero-title">
+        Entiende el mercado.<br/>
+        <span class="gradient-text">Entiéndete a ti mismo.</span>
+      </h1>
+      
+      <p class="hero-subtitle">
+        Tu Radar Financiero Cognitivo
+      </p>
+
+      <p class="hero-description">
+        IA que combina análisis de mercados con psicología del inversor. 
+        Descubre <strong>qué</strong> está pasando, <strong>por qué</strong> está pasando, 
+        y cómo encaja con <strong>tu forma única de decidir</strong>.
+      </p>
+
+      <!-- Formulario de captura -->
+      <div class="waitlist-section">
+        <h2 class="waitlist-title">🎯 Sé de los primeros</h2>
+        <p class="waitlist-subtitle">Únete a la lista de espera y recibe acceso anticipado + 50% de descuento</p>
+        
+        <form class="waitlist-form" id="waitlistForm">
+          <input 
+            type="email" 
+            placeholder="tu@email.com" 
+            required 
+            aria-label="Tu correo electrónico"
+          />
+          <button type="submit" class="btn btn-primary">Quiero acceso anticipado</button>
+          <small class="waitlist-note">
+            <span>🔒</span>
+            <span>Sin spam. Solo actualidades importantes. Cancela cuando quieras.</span>
+          </small>
+        </form>
+
+        <div class="success-message" id="successMessage">
+          <h3>✅ ¡Bienvenido a bordo!</h3>
+          <p>Te hemos añadido a la lista de espera. Te avisaremos antes que nadie del lanzamiento.</p>
         </div>
-    </section>
+      </div>
 
-    <!-- Features -->
-    <section class="features">
+      <!-- Features -->
+      <section class="features">
         <div class="container">
-            <div class="feature-card">
-                <div class="feature-icon">🧠</div>
-                <h3>Perfil Cognitivo IA</h3>
-                <p>Descubre tus sesgos financieros ocultos y recibe alertas personalizadas para tomar mejores decisiones, no impulsivas.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🔗</div>
-                <h3>Correlaciones Ocultas</h3>
-                <p>Conexiones entre activos, noticias y macroeconomía que nadie te muestra. Detecta patrones antes que el mercado.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🎮</div>
-                <h3>Simulador What-If</h3>
-                <p>Prueba escenarios sin arriesgar un euro: "¿Qué pasa si la inflación sube al 5%?" o "¿Y si hay crisis geopolítica?"</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">📊</div>
-                <h3>Alertas Inteligentes</h3>
-                <p>No solo te dice QUÉ pasa, sino POR QUÉ pasa y cómo afecta a TU cartera específicamente.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🛡️</div>
-                <h3>Protección Conductual</h3>
-                <p>La IA detecta cuando vas a operar por emoción y te avisa: "Espera 24h. Tu historial muestra que así pierdes menos."</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">📈</div>
-                <h3>Sin Ejecución Automática</h3>
-                <p>Tú mantienes el control. Solo análisis, educación y autoconocimiento. Sin consejo financiero regulado.</p>
-            </div>
+          <div class="feature-card">
+            <div class="feature-icon">🧠</div>
+            <h3>Perfil Cognitivo IA</h3>
+            <p>Descubre tus sesgos financieros ocultos y recibe alertas personalizadas para tomar mejores decisiones, no impulsivas.</p>
+          </div>
+          
+          <div class="feature-card">
+            <div class="feature-icon">🔗</div>
+            <h3>Correlaciones Ocultas</h3>
+            <p>Conexiones entre activos, noticias y macroeconomía que nadie te muestra. Detecta patrones antes que el mercado.</p>
+          </div>
+          
+          <div class="feature-card">
+            <div class="feature-icon">🎮</div>
+            <h3>Simulador What-If</h3>
+            <p>Prueba escenarios sin arriesgar un euro: "¿Qué pasa si la inflación sube al 5%?" o "¿Y si hay crisis geopolítica?"</p>
+          </div>
+          
+          <div class="feature-card">
+            <div class="feature-icon">📊</div>
+            <h3>Alertas Inteligentes</h3>
+            <p>No solo te dice QUÉ pasa, sino POR QUÉ pasa y cómo afecta a TU cartera específicamente.</p>
+          </div>
+          
+          <div class="feature-card">
+            <div class="feature-icon">🛡️</div>
+            <h3>Protección Conductual</h3>
+            <p>La IA detecta cuando vas a operar por emoción y te avisa: "Espera 24h. Tu historial muestra que así pierdes menos."</p>
+          </div>
+          
+          <div class="feature-card">
+            <div class="feature-icon">📈</div>
+            <h3>Sin Ejecución Automática</h3>
+            <p>Tú mantienes el control. Solo análisis, educación y autoconocimiento. Sin consejo financiero regulado.</p>
+          </div>
         </div>
-    </section>
+      </section>
 
-    <!-- Roadmap -->
-    <section class="roadmap">
-        <div class="container">
-            <h2 class="section-title">🗓️ Roadmap de Lanzamiento</h2>
-            <div class="roadmap-items">
-                <div class="roadmap-item completed">
-                    <span class="status">✅</span>
-                    <div>
-                        <h4>Landing Page Activa</h4>
-                        <p>Captando early adopters</p>
-                        <span class="badge-status">COMPLETADO</span>
-                    </div>
-                </div>
-                <div class="roadmap-item progress">
-                    <span class="status">🔧</span>
-                    <div>
-                        <h4>Desarrollo del MVP</h4>
-                        <p>Motor de correlaciones + perfil cognitivo</p>
-                        <span class="badge-status">EN PROGRESO</span>
-                    </div>
-                </div>
-                <div class="roadmap-item">
-                    <span class="status">🧪</span>
-                    <div>
-                        <h4>Beta Cerrada</h4>
-                        <p>Acceso para lista de espera (Q2 2026)</p>
-                    </div>
-                </div>
-                <div class="roadmap-item">
-                    <span class="status">🚀</span>
-                    <div>
-                        <h4>Lanzamiento Público</h4>
-                        <p>Disponible para todos con planes desde $99/año</p>
-                    </div>
-                </div>
+      <!-- Roadmap -->
+      <section class="roadmap">
+        <h2 class="section-title">🗓️ Roadmap de Lanzamiento</h2>
+        <div class="roadmap-items">
+          <div class="roadmap-item completed">
+            <span class="status">✅</span>
+            <div>
+              <h4>Landing Page Activa</h4>
+              <p>Captando early adopters</p>
             </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <p>© 2026 ecomarket-ai. Todos los derechos reservados.</p>
-            <div class="footer-links">
-                <a href="#">Privacidad</a>
-                <a href="#">Términos</a>
-                <a href="mailto:info@ecomarket-ai.es">Contacto</a>
+            <span class="badge-status">COMPLETADO</span>
+          </div>
+          
+          <div class="roadmap-item progress">
+            <span class="status">🔧</span>
+            <div>
+              <h4>Desarrollo del MVP</h4>
+              <p>Motor de correlaciones + perfil cognitivo</p>
             </div>
-            <p class="disclaimer">
-                ⚠️ <strong>Aviso Legal:</strong> ecomarket-ai es una herramienta educativa de análisis financiero y autoconocimiento. 
-                No ejecuta operaciones, no gestiona dinero, no ofrece consejo financiero regulado. 
-                Las decisiones de inversión son responsabilidad exclusiva del usuario. 
-                Rentabilidades pasadas no garantizan resultados futuros.
-            </p>
+            <span class="badge-status">EN PROGRESO</span>
+          </div>
+          
+          <div class="roadmap-item">
+            <span class="status">🧪</span>
+            <div>
+              <h4>Beta Cerrada</h4>
+              <p>Acceso para lista de espera (Q2 2026)</p>
+            </div>
+          </div>
+          
+          <div class="roadmap-item">
+            <span class="status">🚀</span>
+            <div>
+              <h4>Lanzamiento Público</h4>
+              <p>Disponible para todos con planes desde $99/año</p>
+            </div>
+          </div>
         </div>
-    </footer>
+      </section>
+    </div>
+  </main>
 
-    <!-- 2. CONEXIÓN SUPABASE -->
-    <script src="js/supabase-client.js"></script>
-    
-    <!-- 3. LÓGICA DE LA APP -->
-    <script src="js/app.js"></script>
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <!-- Redes Sociales -->
+      <div class="social-links">
+        <a href="https://x.com/ecomarket_ai" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+          <svg viewBox="0 0 24 24">
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+          </svg>
+        </a>
+        <a href="https://linkedin.com/company/ecomarket-ai" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24">
+            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+          </svg>
+        </a>
+        <a href="https://github.com/juanramonhernandezgomez-oss/ecomarket-ai" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+          </svg>
+        </a>
+      </div>
+      
+      <p>© 2026 ecomarket-ai. Todos los derechos reservados.</p>
+      <div class="footer-links">
+        <a href="#">Privacidad</a>
+        <a href="#">Términos</a>
+        <a href="mailto:info@ecomarket-ai.es">Contacto</a>
+      </div>
+      
+      <div class="disclaimer">
+        <strong>⚠️ Aviso Legal:</strong> ecomarket-ai es una herramienta educativa de análisis financiero y autoconocimiento. 
+        No ejecuta operaciones, no gestiona dinero, no ofrece consejo financiero regulado. 
+        Las decisiones de inversión son responsabilidad exclusiva del usuario. 
+        Rentabilidades pasadas no garantizan resultados futuros.
+      </div>
+    </div>
+  </footer>
+
+  <!-- Supabase JS Library -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  
+  <!-- Tus Scripts -->
+  <script src="js/supabase-client.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/auth.js"></script>
+
 </body>
 </html>
