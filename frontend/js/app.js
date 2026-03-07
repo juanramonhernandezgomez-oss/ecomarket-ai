@@ -2,18 +2,23 @@
  * ecomarket-ai - Aplicación Frontend
  * Radar Financiero Cognitivo
  * 
- * @author juanramonhernandezgomez-oss
- * @version 1.0.0
+ * @version 1.1.0
  */
+
+// 🔑 CONFIGURACIÓN SUPABASE
+const SUPABASE_URL = 'https://huvnjjarkycddhxkwsna.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh1dm5qamFya3ljZGRoeGt3c25hIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI4MzEwNjYsImV4cCI6MjA4ODQwNzA2Nn0.LyTXYZgQ254aiQFaO5u1RnAqHkhrpI6Qjso0bH3rn8w';
+
+// Inicializar cliente de Supabase
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 // Esperar a que el DOM esté cargado
 document.addEventListener('DOMContentLoaded', function() {
+  console.log('✅ ecomarket-ai app loaded');
+  console.log('Supabase URL:', SUPABASE_URL);
   
-  // Inicializar componentes
   initWaitlistForm();
   initSmoothScroll();
-  initAnalytics();
-  
 });
 
 /**
@@ -21,9 +26,13 @@ document.addEventListener('DOMContentLoaded', function() {
  */
 function initWaitlistForm() {
   const form = document.getElementById('waitlistForm');
-  const successMessage = document.getElementById('successMessage');
   
-  if (!form) return;
+  if (!form) {
+    console.log('⚠️ No se encontró el formulario waitlistForm');
+    return;
+  }
+  
+  console.log('✅ Formulario encontrado');
   
   form.addEventListener('submit', async function(e) {
     e.preventDefault();
@@ -32,9 +41,12 @@ function initWaitlistForm() {
     const email = emailInput.value.trim();
     const button = form.querySelector('button');
     const originalText = button.textContent;
+    const successMessage = document.getElementById('successMessage');
     
-    // Validación básica
-    if (!isValidEmail(email)) {
+    console.log('📧 Email a registrar:', email);
+    
+    // Validación básica de email
+    if (!email || !isValidEmail(email)) {
       showNotification('Por favor, introduce un email válido', 'error');
       return;
     }
@@ -45,62 +57,76 @@ function initWaitlistForm() {
     emailInput.disabled = true;
     
     try {
-      // Aquí iría la llamada a tu backend o Formspree
-      // Por ahora, simulamos éxito:
-      
-      // Guardar en localStorage para analytics básico
+      // Preparar datos para insertar
       const waitlistData = {
         email: email,
-        date: new Date().toISOString(),
         source: 'landing_page',
-        userAgent: navigator.userAgent,
-        timestamp: Date.now()
+        user_agent: navigator.userAgent,
+        ip_hash: 'anonymous_' + Date.now(),
+        status: 'pending'
       };
       
-      // Guardar localmente (después irá a tu BD)
-      const existing = JSON.parse(localStorage.getItem('ecomarket_waitlist') || '[]');
+      console.log('📤 Enviando a Supabase:', waitlistData);
       
-      // Verificar si el email ya existe
-      const emailExists = existing.some(entry => entry.email === email);
+      // Insertar en la tabla waitlist
+      const { data, error } = await supabase
+        .from('waitlist')
+        .insert([waitlistData])
+        .select();
       
-      if (emailExists) {
-        showNotification('⚠️ Este email ya está registrado', 'warning');
-        resetForm(button, emailInput, originalText);
-        return;
+      if (error) {
+        console.error('❌ Error de Supabase:', error);
+        throw error;
       }
       
-      existing.push(waitlistData);
-      localStorage.setItem('ecomarket_waitlist', JSON.stringify(existing));
+      console.log('✅ Registrado correctamente:', data);
       
-      // Simular delay de red
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Guardar en localStorage como backup
+      saveToLocalStorage(email, waitlistData);
       
       // Mostrar mensaje de éxito
       if (successMessage) {
         successMessage.classList.add('show');
         form.style.display = 'none';
+      } else {
+        showNotification('✅ ¡Bienvenido a bordo! Te hemos añadido a la lista de espera.', 'success');
       }
       
-      // Analytics: evento personalizado
+      // Event para analytics (GA4)
       if (typeof gtag !== 'undefined') {
         gtag('event', 'waitlist_signup', {
           event_category: 'conversion',
-          event_label: 'landing_page'
+          event_label: 'landing_page',
+          value: 1
         });
       }
       
-      console.log('✅ Nuevo registro en waitlist:', waitlistData);
-      
     } catch (error) {
-      console.error('❌ Error:', error);
-      showNotification('❌ Error al registrar. Intenta de nuevo.', 'error');
-      resetForm(button, emailInput, originalText);
+      console.error('❌ Error completo:', error);
+      
+      let message = 'Error al registrar. Intenta de nuevo.';
+      
+      // Manejo de errores específicos
+      if (error.code === '23505' || error.message?.includes('duplicate')) {
+        message = '⚠️ Este email ya está registrado';
+      } else if (error.message?.includes('network')) {
+        message = '❌ Error de conexión. Verifica tu internet.';
+      } else if (error.message) {
+        message = '❌ ' + error.message;
+      }
+      
+      showNotification(message, 'error');
+      
+      // Resetear botón
+      button.textContent = originalText;
+      button.disabled = false;
+      emailInput.disabled = false;
     }
   });
 }
 
 /**
- * Validar email
+ * Validar formato de email
  */
 function isValidEmail(email) {
   const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -108,19 +134,32 @@ function isValidEmail(email) {
 }
 
 /**
- * Resetear formulario
+ * Guardar en localStorage como backup
  */
-function resetForm(button, input, originalText) {
-  button.textContent = originalText;
-  button.disabled = false;
-  input.disabled = false;
+function saveToLocalStorage(email, data) {
+  try {
+    const existing = JSON.parse(localStorage.getItem('ecomarket_waitlist') || '[]');
+    const emailExists = existing.some(entry => entry.email === email);
+    
+    if (!emailExists) {
+      existing.push({ ...data, date: new Date().toISOString() });
+      localStorage.setItem('ecomarket_waitlist', JSON.stringify(existing));
+      console.log('💾 Guardado en localStorage');
+    }
+  } catch (e) {
+    console.warn('⚠️ No se pudo guardar en localStorage:', e);
+  }
 }
 
 /**
- * Mostrar notificación
+ * Mostrar notificación flotante
  */
 function showNotification(message, type = 'info') {
-  // Crear elemento de notificación
+  // Eliminar notificaciones anteriores
+  const existing = document.querySelector('.notification');
+  if (existing) existing.remove();
+  
+  // Crear nueva notificación
   const notification = document.createElement('div');
   notification.className = `notification notification-${type}`;
   notification.textContent = message;
@@ -131,22 +170,39 @@ function showNotification(message, type = 'info') {
     top: '20px',
     right: '20px',
     padding: '1rem 1.5rem',
-    borderRadius: '8px',
-    backgroundColor: type === 'error' ? '#ef4444' : type === 'warning' ? '#f59e0b' : '#10b981',
+    borderRadius: '12px',
+    backgroundColor: type === 'error' ? '#ef4444' : type === 'success' ? '#10b981' : '#3b82f6',
     color: 'white',
     fontWeight: '600',
-    boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
-    zIndex: '1000',
+    fontSize: '0.9rem',
+    boxShadow: '0 10px 40px rgba(0,0,0,0.3)',
+    zIndex: '10000',
     animation: 'slideIn 0.3s ease-out',
-    cursor: 'pointer'
+    cursor: 'pointer',
+    maxWidth: '350px'
   });
+  
+  // Animación CSS
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(100px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes slideOut {
+      from { opacity: 1; transform: translateX(0); }
+      to { opacity: 0; transform: translateX(100px); }
+    }
+  `;
+  document.head.appendChild(style);
   
   // Añadir al DOM
   document.body.appendChild(notification);
   
   // Click para cerrar
   notification.addEventListener('click', () => {
-    notification.remove();
+    notification.style.animation = 'slideOut 0.3s ease-out';
+    setTimeout(() => notification.remove(), 300);
   });
   
   // Auto-cerrar después de 5 segundos
@@ -177,43 +233,10 @@ function initSmoothScroll() {
 }
 
 /**
- * Inicializar analytics (placeholder)
+ * Utilidades exportadas
  */
-function initAnalytics() {
-  // Aquí puedes integrar Plausible, Google Analytics, etc.
-  console.log('📊 Analytics initialized');
-}
-
-/**
- * Utilidades adicionales
- */
-
-// Detectar si es móvil
-function isMobile() {
-  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-}
-
-// Copiar al portapapeles
-function copyToClipboard(text) {
-  if (navigator.clipboard) {
-    navigator.clipboard.writeText(text).then(() => {
-      showNotification('✅ Copiado al portapapeles', 'success');
-    });
-  } else {
-    // Fallback para navegadores antiguos
-    const textArea = document.createElement('textarea');
-    textArea.value = text;
-    document.body.appendChild(textArea);
-    textArea.select();
-    document.execCommand('copy');
-    document.body.removeChild(textArea);
-    showNotification('✅ Copiado al portapapeles', 'success');
-  }
-}
-
-// Exportar funciones útiles
 window.ecomarket = {
-  copyToClipboard,
-  isMobile,
-  showNotification
+  supabase,
+  showNotification,
+  isValidEmail
 };
