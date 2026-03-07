@@ -1,26 +1,41 @@
-# Python
-__pycache__/
-*.py[cod]
-*.pyo
-*.env
-venv/
-.env.local
-
-# Node
+# Dependencies
 node_modules/
-dist/
-build/
+.pnp
+.pnp.js
 
-# IDE
+# Production
+.next/
+out/
+build/
+dist/
+
+# Development
+.env
+.env.local
+.env.*.local
+.DS_Store
+*.pem
+
+# Testing
+.coverage/
+coverage/
+
+# IDEs
 .vscode/
 .idea/
 *.swp
 *.swo
+*~
 
-# General
-.DS_Store
-Thumbs.db
+# Misc
 *.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.eslintcache
+
+# Local development files
+.vercel
+Thumbs.db
 .secrets
 *.key
-*.pem
