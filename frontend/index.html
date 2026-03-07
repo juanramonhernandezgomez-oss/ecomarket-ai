@@ -568,14 +568,20 @@
       y cómo encaja con <strong>tu forma única de decidir</strong>.
     </p>
 
-    <!-- Formulario de captura -->
+    <!-- Formulario de captura - CONECTADO A FORMSPREE -->
     <div class="signup-section">
       <h2>🎯 Sé de los primeros</h2>
       <p>Únete a la lista de espera y recibe acceso anticipado + 50% de descuento</p>
       
-      <form class="signup-form" id="waitlistForm">
+      <form 
+        class="signup-form" 
+        action="https://formspree.io/f/mojkqydp" 
+        method="POST"
+        id="waitlistForm"
+      >
         <input 
           type="email" 
+          name="email" 
           placeholder="tu@email.com" 
           required 
           aria-label="Tu correo electrónico"
@@ -696,55 +702,21 @@
     </p>
   </footer>
 
-  <!-- Script para el formulario -->
+  <!-- Script para manejo básico del formulario con Formspree -->
   <script>
     document.getElementById('waitlistForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      
-      const email = e.target.querySelector('input[type="email"]').value;
+      // Formspree maneja el submit, pero añadimos UX mejorada
       const button = e.target.querySelector('button');
       const originalText = button.textContent;
       
-      // Animación de carga
-      button.textContent = '⏳ Procesando...';
+      button.textContent = '⏳ Enviando...';
       button.disabled = true;
       
-      try {
-        // Aquí conectarás con tu backend o servicio de email
-        // Por ahora, simulamos éxito:
-        
-        // Guardar en localStorage para analytics básico
-        const waitlistData = {
-          email: email,
-          date: new Date().toISOString(),
-          source: 'landing_page'
-        };
-        
-        // Simular delay de red
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        
-        // Guardar localmente (después irá a tu BD)
-        const existing = JSON.parse(localStorage.getItem('ecomarket_waitlist') || '[]');
-        existing.push(waitlistData);
-        localStorage.setItem('ecomarket_waitlist', JSON.stringify(existing));
-        
-        // Mostrar mensaje de éxito
+      // Formspree redirigirá después del submit, pero mostramos mensaje primero
+      setTimeout(() => {
         document.getElementById('successMessage').classList.add('show');
-        
-        // Ocultar formulario
         e.target.style.display = 'none';
-        
-        // Analytics básico (puedes conectar con Plausible, Google Analytics, etc.)
-        console.log('Nuevo registro en waitlist:', waitlistData);
-        
-      } catch (error) {
-        console.error('Error:', error);
-        button.textContent = '❌ Error. Intenta de nuevo';
-        setTimeout(() => {
-          button.textContent = originalText;
-          button.disabled = false;
-        }, 2000);
-      }
+      }, 1500);
     });
 
     // Animación suave al hacer scroll
