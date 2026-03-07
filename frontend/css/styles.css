@@ -46,6 +46,9 @@ VARIABLES Y RESET
   box-sizing: border-box;
 }
 
+/* helper utilities */
+.hidden { display: none !important; }
+
 html {
   scroll-behavior: smooth;
   font-size: 16px;
@@ -834,6 +837,9 @@ DASHBOARD
 /* ============================================
 NOTIFICATIONS
 ============================================ */
+@keyframes slideIn { from { opacity: 0; transform: translateX(100px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes slideOut { from { opacity: 1; transform: translateX(0); } to { opacity: 0; transform: translateX(100px); } }
+
 .notification {
   position: fixed;
   top: 20px;
@@ -862,6 +868,10 @@ NOTIFICATIONS
 .notification-info {
   background: var(--info);
   color: var(--white);
+}
+
+.notification.slide-out {
+  animation: slideOut 0.3s ease-out;
 }
 
 /* ============================================

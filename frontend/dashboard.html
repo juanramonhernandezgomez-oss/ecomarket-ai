@@ -5,12 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - ecomarket-ai</title>
     <meta name="description" content="Tu panel de control financiero">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    
+    <!-- CSP restrictiva -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self'; connect-src https://huvnjjarkycddhxkwsna.supabase.co;">
     
     <!-- Estilos -->
     <link rel="stylesheet" href="css/styles.css">
-    
-    <!-- 1. LIBRERÍA SUPABASE (CDN) -->
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body class="dashboard-page">
     <!-- Header Dashboard -->
@@ -32,7 +34,7 @@
                 <p>Cargando tu dashboard...</p>
             </div>
             
-            <div class="dashboard-content" id="dashboardContent" style="display: none;">
+            <div class="dashboard-content hidden" id="dashboardContent">
                 <section class="welcome-section">
                     <h1>¡Bienvenido!</h1>
                     <p>Tu Radar Financiero Cognitivo está listo</p>
@@ -92,23 +94,9 @@
         </div>
     </main>
 
-    <!-- 2. CONEXIÓN SUPABASE -->
-    <script src="js/supabase-client.js"></script>
-    
-    <!-- 3. LÓGICA DE AUTENTICACIÓN -->
-    <script src="js/auth.js"></script>
-    
-    <!-- 4. LÓGICA GENERAL -->
-    <script src="js/app.js"></script>
-    
-    <!-- Script específico del dashboard -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            setTimeout(() => {
-                document.getElementById('loadingState').style.display = 'none';
-                document.getElementById('dashboardContent').style.display = 'block';
-            }, 1000);
-        });
-    </script>
+    <!-- módulos JS -->
+    <script type="module" src="js/auth.js"></script>
+    <script type="module" src="js/app.js"></script>
+    <script type="module" src="js/dashboard.js"></script>
 </body>
 </html>
