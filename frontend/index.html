@@ -5,15 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>ecomarket-ai | Tu Radar Financiero Cognitivo - Próximamente</title>
   <meta name="description" content="IA que combina análisis de mercados con psicología del inversor. Entiende qué pasa, por qué pasa, y cómo encaja con tu forma de decidir."/>
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta http-equiv="X-Frame-Options" content="DENY">
   
-  <!-- Google Analytics 4 -->
+  <!-- Seguridad: Content Security Policy restrictiva -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://www.googletagmanager.com; style-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com; font-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com; img-src 'self' data:; connect-src https://huvnjjarkycddhxkwsna.supabase.co; base-uri 'self';">
+  
+  <!-- analytics separado para evitar scripts inline -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'G-XXXXXXXXXX');
-  </script>
+  <script defer src="js/analytics.js"></script>
   
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
@@ -61,8 +61,8 @@
           <path d="M14 34l10-10 4 4 8-8" stroke="url(#gradient)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
           <defs>
             <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" style="stop-color:#06b6d4"/>
-              <stop offset="100%" style="stop-color:#8b5cf6"/>
+              <stop offset="0%" stop-color="#06b6d4"/>
+              <stop offset="100%" stop-color="#8b5cf6"/>
             </linearGradient>
           </defs>
         </svg>
@@ -96,8 +96,8 @@
           <path d="M50 150l40-40 16 16 32-32" stroke="url(#gradient2)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
           <defs>
             <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" style="stop-color:#06b6d4"/>
-              <stop offset="100%" style="stop-color:#8b5cf6"/>
+              <stop offset="0%" stop-color="#06b6d4"/>
+              <stop offset="100%" stop-color="#8b5cf6"/>
             </linearGradient>
           </defs>
         </svg>
@@ -264,13 +264,9 @@
     </div>
   </footer>
 
-  <!-- Supabase JS Library -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  
-  <!-- Tus Scripts -->
-  <script src="js/supabase-client.js"></script>
-  <script src="js/app.js"></script>
-  <script src="js/auth.js"></script>
+  <!-- scripts cargados como módulos; supabase se importa internamente -->
+  <script type="module" src="js/app.js"></script>
+  <script type="module" src="js/auth.js"></script>
 
 </body>
 </html>
