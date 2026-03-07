@@ -2,7 +2,7 @@
  * auth.js
  * Manejo de login, registro y sesiones
  * Usa la conexión centralizada desde supabase-client.js
- * @version 1.0.0
+ * @version 1.0.1
  */
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -36,7 +36,7 @@ function initLoginForm() {
         button.disabled = true;
         
         try {
-            // USAR window.supabaseClient (conexión centralizada)
+            // ✅ USAR window.supabaseClient (conexión centralizada)
             const { data, error } = await window.supabaseClient.auth.signInWithPassword({
                 email: email,
                 password: password
@@ -95,7 +95,7 @@ function initRegisterForm() {
         button.disabled = true;
         
         try {
-            // USAR window.supabaseClient (conexión centralizada)
+            // ✅ USAR window.supabaseClient (conexión centralizada)
             const { data, error } = await window.supabaseClient.auth.signUp({
                 email: email,
                 password: password,

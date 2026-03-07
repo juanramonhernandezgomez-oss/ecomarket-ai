@@ -2,17 +2,19 @@
  * app.js
  * Lógica general de la aplicación ecomarket-ai
  * Usa la conexión centralizada desde supabase-client.js
- * @version 1.2.0
+ * @version 1.2.1
  */
 
 document.addEventListener('DOMContentLoaded', function() {
     console.log('✅ ecomarket-ai app loaded');
     
-    // Verificar que la conexión esté disponible
+    // ✅ USAR la conexión centralizada (NO crear una nueva)
     if (!window.supabaseClient) {
         console.error('❌ No hay conexión a BD disponible. Revisa supabase-client.js');
         return;
     }
+    
+    console.log('📍 Supabase conectado:', window.supabaseClient);
     
     initWaitlistForm();
     initSmoothScroll();
@@ -64,7 +66,7 @@ function initWaitlistForm() {
             
             console.log('📤 Enviando a Supabase:', waitlistData);
             
-            // USAR window.supabaseClient (conexión centralizada)
+            // ✅ USAR window.supabaseClient (conexión centralizada)
             const { data, error } = await window.supabaseClient
                 .from('waitlist')
                 .insert([waitlistData])
