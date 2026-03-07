@@ -50,7 +50,8 @@ function initLoginForm() {
         } catch (error) {
             showNotification('❌ ' + (error.message || 'Error al iniciar sesión'), 'error');
         } finally {
-            setButtonLoading(button, false);
+            // pequeño delay para evitar envíos múltiples
+            setTimeout(() => setButtonLoading(button, false), 500);
         }
     });
 }
@@ -105,7 +106,8 @@ function initRegisterForm() {
             }
             showNotification('❌ ' + message, 'error');
         } finally {
-            setButtonLoading(button, false);
+            // pequeño delay para evitar envíos múltiples
+            setTimeout(() => setButtonLoading(button, false), 500);
         }
     });
 }

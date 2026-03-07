@@ -2,7 +2,7 @@
 // centraliza la creación del cliente de Supabase usando módulos ESM
 // mantiene las credenciales en un único lugar (config.js)
 
-import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/module/supabase.js';
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 import { SUPABASE_URL, SUPABASE_ANON_KEY } from './config.js';
 
 if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {

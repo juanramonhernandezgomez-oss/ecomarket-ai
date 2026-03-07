@@ -90,7 +90,8 @@ function initWaitlistForm() {
             }
             showNotification(message, 'error');
         } finally {
-            setButtonLoading(button, false);
+            // pequeño delay para evitar envíos múltiples
+            setTimeout(() => setButtonLoading(button, false), 500);
             emailInput.disabled = false;
         }
     });
