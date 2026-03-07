@@ -36,6 +36,9 @@ export function showNotification(message, type = 'info') {
     setTimeout(() => {
         if (notification.parentNode) {
             notification.classList.add('slide-out');
+            setTimeout(() => notification.remove(), 300);
+        }
+    }, 5000);
 }
 
 /**
