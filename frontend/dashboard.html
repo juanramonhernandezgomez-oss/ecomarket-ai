@@ -6,281 +6,65 @@
   <title>Dashboard - ecomarket-ai</title>
   <meta name="description" content="Tu Radar Financiero Cognitivo"/>
   
-  <!-- Fuentes Google -->
+  <!-- Fuentes Google (URLs limpias) -->
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
   
   <style>
     :root {
-      --bg-primary: #0a0e1a;
-      --bg-secondary: #111827;
-      --bg-card: #1f2937;
-      --accent-cyan: #06b6d4;
-      --accent-purple: #8b5cf6;
+      --bg-primary: #0a0e1a; --bg-secondary: #111827; --bg-card: #1f2937;
+      --accent-cyan: #06b6d4; --accent-purple: #8b5cf6;
       --accent-gradient: linear-gradient(135deg, #06b6d4 0%, #8b5cf6 100%);
-      --text-primary: #f9fafb;
-      --text-secondary: #9ca3af;
-      --border-color: #374151;
-      --success: #10b981;
-      --warning: #f59e0b;
+      --text-primary: #f9fafb; --text-secondary: #9ca3af;
+      --border-color: #374151; --success: #10b981; --warning: #f59e0b;
     }
-
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--bg-primary);
-      color: var(--text-primary);
-      min-height: 100vh;
-    }
-
-    /* Header */
-    header {
-      background: var(--bg-secondary);
-      border-bottom: 1px solid var(--border-color);
-      padding: 1rem 5%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-
-    .logo {
-      font-size: 1.25rem;
-      font-weight: 700;
-      background: var(--accent-gradient);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-decoration: none;
-    }
-
-    .user-menu {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    .user-email {
-      color: var(--text-secondary);
-      font-size: 0.875rem;
-    }
-
-    .btn-logout {
-      padding: 0.5rem 1rem;
-      background: transparent;
-      border: 2px solid var(--border-color);
-      border-radius: 8px;
-      color: var(--text-primary);
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .btn-logout:hover {
-      border-color: var(--accent-cyan);
-      color: var(--accent-cyan);
-    }
-
-    /* Main Content */
-    main {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 3rem 5%;
-    }
-
-    .welcome-section {
-      margin-bottom: 3rem;
-    }
-
-    .welcome-section h1 {
-      font-size: 2rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .welcome-section p {
-      color: var(--text-secondary);
-    }
-
-    /* Stats Grid */
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 1.5rem;
-      margin-bottom: 3rem;
-    }
-
-    .stat-card {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 1.5rem;
-    }
-
-    .stat-card h3 {
-      font-size: 0.875rem;
-      color: var(--text-secondary);
-      margin-bottom: 0.5rem;
-    }
-
-    .stat-card .value {
-      font-size: 1.75rem;
-      font-weight: 700;
-      background: var(--accent-gradient);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    /* Features Section */
-    .features-section {
-      margin-bottom: 3rem;
-    }
-
-    .features-section h2 {
-      font-size: 1.5rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .features-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 1.5rem;
-    }
-
-    .feature-card {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 1.5rem;
-      transition: all 0.3s;
-    }
-
-    .feature-card:hover {
-      border-color: var(--accent-cyan);
-      transform: translateY(-2px);
-    }
-
-    .feature-card .icon {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-    }
-
-    .feature-card h3 {
-      font-size: 1.125rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .feature-card p {
-      color: var(--text-secondary);
-      font-size: 0.875rem;
-      line-height: 1.6;
-    }
-
-    .feature-card .badge {
-      display: inline-block;
-      padding: 0.25rem 0.75rem;
-      border-radius: 100px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      margin-top: 1rem;
-    }
-
-    .badge-available {
-      background: rgba(16, 185, 129, 0.15);
-      color: var(--success);
-    }
-
-    .badge-coming-soon {
-      background: rgba(245, 158, 11, 0.15);
-      color: var(--warning);
-    }
-
-    /* Profile Section */
-    .profile-section {
-      background: var(--bg-secondary);
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 2rem;
-      margin-bottom: 3rem;
-    }
-
-    .profile-section h2 {
-      font-size: 1.5rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .profile-info {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1rem;
-    }
-
-    .profile-item {
-      padding: 1rem;
-      background: var(--bg-card);
-      border-radius: 8px;
-    }
-
-    .profile-item label {
-      font-size: 0.75rem;
-      color: var(--text-secondary);
-      display: block;
-      margin-bottom: 0.25rem;
-    }
-
-    .profile-item .value {
-      font-size: 1rem;
-      font-weight: 600;
-    }
-
-    /* Loading State */
-    .loading {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 60vh;
-    }
-
-    .loading-spinner {
-      width: 48px;
-      height: 48px;
-      border: 4px solid var(--border-color);
-      border-top-color: var(--accent-cyan);
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-    }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-    .loading p {
-      margin-top: 1rem;
-      color: var(--text-secondary);
-    }
-
-    /* Responsive */
-    @media (max-width: 768px) {
-      header { flex-direction: column; gap: 1rem; }
-      .stats-grid { grid-template-columns: 1fr; }
-      .features-grid { grid-template-columns: 1fr; }
-    }
+    body { font-family: 'Inter', sans-serif; background: var(--bg-primary); color: var(--text-primary); min-height: 100vh; }
+    header { background: var(--bg-secondary); border-bottom: 1px solid var(--border-color); padding: 1rem 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
+    .logo { font-size: 1.25rem; font-weight: 700; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-decoration: none; }
+    .user-menu { display: flex; align-items: center; gap: 1rem; }
+    .user-email { color: var(--text-secondary); font-size: 0.875rem; }
+    .btn-logout { padding: 0.5rem 1rem; background: transparent; border: 2px solid var(--border-color); border-radius: 8px; color: var(--text-primary); cursor: pointer; transition: all 0.2s; }
+    .btn-logout:hover { border-color: var(--accent-cyan); color: var(--accent-cyan); }
+    main { max-width: 1200px; margin: 0 auto; padding: 3rem 5%; }
+    .welcome-section { margin-bottom: 3rem; }
+    .welcome-section h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+    .welcome-section p { color: var(--text-secondary); }
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 3rem; }
+    .stat-card { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; }
+    .stat-card h3 { font-size: 0.875rem; color: var(--text-secondary); margin-bottom: 0.5rem; }
+    .stat-card .value { font-size: 1.75rem; font-weight: 700; background: var(--accent-gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .features-section { margin-bottom: 3rem; }
+    .features-section h2 { font-size: 1.5rem; margin-bottom: 1.5rem; }
+    .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+    .feature-card { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; transition: all 0.3s; }
+    .feature-card:hover { border-color: var(--accent-cyan); transform: translateY(-2px); }
+    .feature-card .icon { font-size: 2rem; margin-bottom: 1rem; }
+    .feature-card h3 { font-size: 1.125rem; margin-bottom: 0.5rem; }
+    .feature-card p { color: var(--text-secondary); font-size: 0.875rem; line-height: 1.6; }
+    .feature-card .badge { display: inline-block; padding: 0.25rem 0.75rem; border-radius: 100px; font-size: 0.75rem; font-weight: 600; margin-top: 1rem; }
+    .badge-available { background: rgba(16, 185, 129, 0.15); color: var(--success); }
+    .badge-coming-soon { background: rgba(245, 158, 11, 0.15); color: var(--warning); }
+    .profile-section { background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 2rem; margin-bottom: 3rem; }
+    .profile-section h2 { font-size: 1.5rem; margin-bottom: 1.5rem; }
+    .profile-info { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+    .profile-item { padding: 1rem; background: var(--bg-card); border-radius: 8px; }
+    .profile-item label { font-size: 0.75rem; color: var(--text-secondary); display: block; margin-bottom: 0.25rem; }
+    .profile-item .value { font-size: 1rem; font-weight: 600; }
+    .loading { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 60vh; }
+    .loading-spinner { width: 48px; height: 48px; border: 4px solid var(--border-color); border-top-color: var(--accent-cyan); border-radius: 50%; animation: spin 1s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading p { margin-top: 1rem; color: var(--text-secondary); }
+    @media (max-width: 768px) { header { flex-direction: column; gap: 1rem; } .stats-grid { grid-template-columns: 1fr; } .features-grid { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
-
-  <!-- Loading State -->
   <div id="loading" class="loading">
     <div class="loading-spinner"></div>
     <p>Cargando tu dashboard...</p>
   </div>
-
-  <!-- Main Content (hidden until loaded) -->
   <div id="mainContent" style="display: none;">
-    
-    <!-- Header -->
     <header>
       <a href="/" class="logo">ecomarket-ai</a>
       <div class="user-menu">
@@ -288,175 +72,82 @@
         <button class="btn-logout" onclick="handleLogout()">Cerrar sesión</button>
       </div>
     </header>
-
-    <!-- Main -->
     <main>
-      
-      <!-- Welcome -->
       <div class="welcome-section">
         <h1 id="welcomeMessage">¡Bienvenido!</h1>
         <p>Tu Radar Financiero Cognitivo está listo</p>
       </div>
-
-      <!-- Stats -->
       <div class="stats-grid">
-        <div class="stat-card">
-          <h3>Plan Actual</h3>
-          <div class="value" id="planValue">Free</div>
-        </div>
-        <div class="stat-card">
-          <h3>Nivel de Experiencia</h3>
-          <div class="value" id="experienceValue">-</div>
-        </div>
-        <div class="stat-card">
-          <h3>Sesgos Detectados</h3>
-          <div class="value" id="biasesValue">0</div>
-        </div>
-        <div class="stat-card">
-          <h3>Días en Plataforma</h3>
-          <div class="value" id="daysValue">1</div>
-        </div>
+        <div class="stat-card"><h3>Plan Actual</h3><div class="value" id="planValue">Free</div></div>
+        <div class="stat-card"><h3>Nivel de Experiencia</h3><div class="value" id="experienceValue">-</div></div>
+        <div class="stat-card"><h3>Sesgos Detectados</h3><div class="value" id="biasesValue">0</div></div>
+        <div class="stat-card"><h3>Días en Plataforma</h3><div class="value" id="daysValue">1</div></div>
       </div>
-
-      <!-- Profile Info -->
       <div class="profile-section">
         <h2>📋 Tu Perfil Cognitivo</h2>
-        <div class="profile-info" id="profileInfo">
-          <!-- Se llena dinámicamente -->
-        </div>
+        <div class="profile-info" id="profileInfo"></div>
       </div>
-
-      <!-- Features -->
       <div class="features-section">
         <h2>🚀 Funcionalidades</h2>
         <div class="features-grid">
-          
-          <div class="feature-card">
-            <div class="icon">🧠</div>
-            <h3>Perfil Cognitivo</h3>
-            <p>Descubre tus sesgos financieros y recibe alertas personalizadas para tomar mejores decisiones.</p>
-            <span class="badge badge-available">✓ Disponible</span>
-          </div>
-
-          <div class="feature-card">
-            <div class="icon">🔗</div>
-            <h3>Correlaciones Ocultas</h3>
-            <p>Conexiones entre activos, noticias y macroeconomía que nadie te muestra.</p>
-            <span class="badge badge-coming-soon">🔜 Próximamente</span>
-          </div>
-
-          <div class="feature-card">
-            <div class="icon">🎮</div>
-            <h3>Simulador What-If</h3>
-            <p>Prueba escenarios sin arriesgar un euro: "¿Qué pasa si la inflación sube al 5%?"</p>
-            <span class="badge badge-coming-soon">🔜 Próximamente</span>
-          </div>
-
-          <div class="feature-card">
-            <div class="icon">📊</div>
-            <h3>Alertas Inteligentes</h3>
-            <p>No solo te dice QUÉ pasa, sino POR QUÉ pasa y cómo afecta a TU cartera.</p>
-            <span class="badge badge-coming-soon">🔜 Próximamente</span>
-          </div>
-
+          <div class="feature-card"><div class="icon">🧠</div><h3>Perfil Cognitivo</h3><p>Descubre tus sesgos financieros y recibe alertas personalizadas para tomar mejores decisiones.</p><span class="badge badge-available">✓ Disponible</span></div>
+          <div class="feature-card"><div class="icon">🔗</div><h3>Correlaciones Ocultas</h3><p>Conexiones entre activos, noticias y macroeconomía que nadie te muestra.</p><span class="badge badge-coming-soon">🔜 Próximamente</span></div>
+          <div class="feature-card"><div class="icon">🎮</div><h3>Simulador What-If</h3><p>Prueba escenarios sin arriesgar un euro: "¿Qué pasa si la inflación sube al 5%?"</p><span class="badge badge-coming-soon">🔜 Próximamente</span></div>
+          <div class="feature-card"><div class="icon">📊</div><h3>Alertas Inteligentes</h3><p>No solo te dice QUÉ pasa, sino POR QUÉ pasa y cómo afecta a TU cartera.</p><span class="badge badge-coming-soon">🔜 Próximamente</span></div>
         </div>
       </div>
+    </main>
+  </div>
 
-    </div>
-  </main>
-
-  <!-- Supabase -->
+  <!-- Supabase (URL limpia) -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   
   <script>
-// 🔑 CONFIGURACIÓN - REEMPLAZA CON TUS DATOS DE SUPABASE
+    // 🔑 CONFIGURACIÓN - TUS DATOS DE SUPABASE (SIN ESPACIOS)
     const SUPABASE_URL = 'https://huvnjjarkycddhxkwsna.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imh1dm5qamFya3ljZGRoeGt3c25hIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI4MzEwNjYsImV4cCI6MjA4ODQwNzA2Nn0.LyTXYZgQ254aiQFaO5u1RnAqHkhrpI6Qjso0bH3rn8w';
-
     
     const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    // Verificar sesión al cargar
     async function checkSession() {
-      const { data: { session } } = await supabase.auth.getSession();
-      
-      if (!session) {
-        // No hay sesión, redirigir a login
-        window.location.href = '/login.html';
-        return;
-      }
-
-      // Hay sesión, cargar datos del usuario
+      const {  { session } } = await supabase.auth.getSession();
+      if (!session) { window.location.href = '/login.html'; return; }
       await loadUserData(session.user);
     }
 
     async function loadUserData(user) {
       try {
-        // Obtener perfil del usuario
-        const { data: profile, error } = await supabase
+        const {  profile, error } = await supabase
           .from('user_profiles')
           .select('*')
           .eq('user_id', user.id)
           .single();
-
         if (error) throw error;
 
-        // Actualizar UI
         document.getElementById('loading').style.display = 'none';
         document.getElementById('mainContent').style.display = 'block';
-
-        // Email
         document.getElementById('userEmail').textContent = user.email;
-
-        // Welcome message
+        
         const name = profile?.full_name || user.email.split('@')[0];
         document.getElementById('welcomeMessage').textContent = `¡Bienvenido, ${name}!`;
-
-        // Stats
         document.getElementById('planValue').textContent = profile?.subscription_plan || 'Free';
-        document.getElementById('experienceValue').textContent = 
-          profile?.experience_level || 'No especificado';
-        document.getElementById('biasesValue').textContent = 
-          profile?.cognitive_biases ? Object.keys(profile.cognitive_biases).length : '0';
+        document.getElementById('experienceValue').textContent = profile?.experience_level || 'No especificado';
+        document.getElementById('biasesValue').textContent = profile?.cognitive_biases ? Object.keys(profile.cognitive_biases).length : '0';
         
-        // Days value (calculado desde created_at)
-        const days = profile?.created_at 
-          ? Math.floor((new Date() - new Date(profile.created_at)) / (1000 * 60 * 60 * 24)) + 1
-          : 1;
+        const days = profile?.created_at ? Math.floor((new Date() - new Date(profile.created_at)) / (1000 * 60 * 60 * 24)) + 1 : 1;
         document.getElementById('daysValue').textContent = days;
 
-        // Profile info
-        const profileInfo = document.getElementById('profileInfo');
-        profileInfo.innerHTML = `
-          <div class="profile-item">
-            <label>Email</label>
-            <div class="value">${user.email}</div>
-          </div>
-          <div class="profile-item">
-            <label>Nombre</label>
-            <div class="value">${profile?.full_name || 'No especificado'}</div>
-          </div>
-          <div class="profile-item">
-            <label>Experiencia</label>
-            <div class="value">${profile?.experience_level || 'No especificado'}</div>
-          </div>
-          <div class="profile-item">
-            <label>Tolerancia al Riesgo</label>
-            <div class="value">${profile?.risk_tolerance || 'No especificado'}</div>
-          </div>
-          <div class="profile-item">
-            <label>Horizonte de Inversión</label>
-            <div class="value">${profile?.investment_horizon || 'No especificado'}</div>
-          </div>
-          <div class="profile-item">
-            <label>Plan</label>
-            <div class="value">${profile?.subscription_plan || 'Free'}</div>
-          </div>
+        document.getElementById('profileInfo').innerHTML = `
+          <div class="profile-item"><label>Email</label><div class="value">${user.email}</div></div>
+          <div class="profile-item"><label>Nombre</label><div class="value">${profile?.full_name || 'No especificado'}</div></div>
+          <div class="profile-item"><label>Experiencia</label><div class="value">${profile?.experience_level || 'No especificado'}</div></div>
+          <div class="profile-item"><label>Tolerancia al Riesgo</label><div class="value">${profile?.risk_tolerance || 'No especificado'}</div></div>
+          <div class="profile-item"><label>Horizonte</label><div class="value">${profile?.investment_horizon || 'No especificado'}</div></div>
+          <div class="profile-item"><label>Plan</label><div class="value">${profile?.subscription_plan || 'Free'}</div></div>
         `;
-
       } catch (error) {
-        console.error('Error loading user data:', error);
-        alert('Error al cargar tus datos. Por favor, inicia sesión de nuevo.');
+        console.error('Error:', error);
+        alert('Error al cargar tus datos. Inicia sesión de nuevo.');
         await handleLogout();
       }
     }
@@ -466,9 +157,7 @@
       window.location.href = '/';
     }
 
-    // Iniciar
     checkSession();
   </script>
-
 </body>
 </html>
