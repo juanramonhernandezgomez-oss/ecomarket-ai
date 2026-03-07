@@ -8,19 +8,18 @@ import {
     showNotification,
     saveToLocalStorage,
     initSmoothScroll,
-    checkAuthStatus
+    checkAuthStatus,
+    $id,
+    setButtonLoading
 } from './utils.js';
 
 
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('✅ ecomarket-ai app loaded');
-
+    // inicialización básica
     if (!supabaseClient) {
-        console.error('❌ No hay conexión a BD disponible. Revisa supabase-client.js');
+        console.error('No hay cliente de Supabase');
         return;
     }
-
-    console.log('📍 Supabase conectado:', supabaseClient);
 
     initWaitlistForm();
     initSmoothScroll();
@@ -28,13 +27,8 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function initWaitlistForm() {
-    const form = document.getElementById('waitlistForm');
-    if (!form) {
-        console.log('⚠️ No se encontró el formulario waitlistForm');
-        return;
-    }
-
-    console.log('✅ Formulario waitlist encontrado');
+    const form = $id('waitlistForm');
+    if (!form) return;
 
     form.addEventListener('submit', async function (e) {
         e.preventDefault();
@@ -42,18 +36,14 @@ function initWaitlistForm() {
         const emailInput = form.querySelector('input[type="email"]');
         const email = emailInput.value.trim();
         const button = form.querySelector('button');
-        const originalText = button.textContent;
-        const successMessage = document.getElementById('successMessage');
-
-        console.log('📧 Email a registrar:', email);
+        const successMessage = $id('successMessage');
 
         if (!email || !isValidEmail(email)) {
             showNotification('Por favor, introduce un email válido', 'error');
             return;
         }
 
-        button.textContent = '⏳ Procesando...';
-        button.disabled = true;
+        setButtonLoading(button, true);
         emailInput.disabled = true;
 
         try {
@@ -65,19 +55,13 @@ function initWaitlistForm() {
                 status: 'pending'
             };
 
-            console.log('📤 Enviando a Supabase:', waitlistData);
 
             const { data, error } = await supabaseClient
                 .from('waitlist')
                 .insert([waitlistData])
                 .select();
 
-            if (error) {
-                console.error('❌ Error de Supabase:', error);
-                throw error;
-            }
-
-            console.log('✅ Registrado correctamente:', data);
+            if (error) throw error;
 
             saveToLocalStorage(email, waitlistData);
 
@@ -96,7 +80,6 @@ function initWaitlistForm() {
                 });
             }
         } catch (error) {
-            console.error('❌ Error completo:', error);
             let message = 'Error al registrar. Intenta de nuevo.';
             if (error.code === '23505' || error.message?.includes('duplicate')) {
                 message = '⚠️ Este email ya está registrado';
@@ -106,8 +89,8 @@ function initWaitlistForm() {
                 message = '❌ ' + error.message;
             }
             showNotification(message, 'error');
-            button.textContent = originalText;
-            button.disabled = false;
+        } finally {
+            setButtonLoading(button, false);
             emailInput.disabled = false;
         }
     });

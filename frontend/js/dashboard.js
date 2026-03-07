@@ -1,12 +1,14 @@
 // dashboard.js
 // lógica específica de la página del dashboard
 
+import { $id } from './utils.js';
+
 export function initDashboardPage() {
     document.addEventListener('DOMContentLoaded', () => {
         // simula carga inicial para mejor UX
         setTimeout(() => {
-            document.getElementById('loadingState').style.display = 'none';
-            document.getElementById('dashboardContent').style.display = 'block';
+            $id('loadingState').style.display = 'none';
+            $id('dashboardContent').style.display = 'block';
         }, 1000);
     });
 }

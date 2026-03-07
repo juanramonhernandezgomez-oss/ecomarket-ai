@@ -6,12 +6,9 @@ import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js
 import { SUPABASE_URL, SUPABASE_ANON_KEY } from './config.js';
 
 if (!SUPABASE_URL || !SUPABASE_ANON_KEY) {
-    console.error('❌ Falta configuración de Supabase en config.js');
+    throw new Error('Configuración de Supabase incompleta');
 }
 
 const supabaseClient = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 export default supabaseClient;
-
-console.log('✅ Conexión a Supabase inicializada correctamente');
-console.log('📍 URL:', SUPABASE_URL);

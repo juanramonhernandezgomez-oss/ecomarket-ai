@@ -28,14 +28,15 @@ export function showNotification(message, type = 'info') {
     document.body.appendChild(notification);
 
     // cerrar al hacer clic o tras 5s, con animación CSS
-    notification.addEventListener('click', () => {
+    notification.addEventListener('click', () => remove());
+
+    // desaparecer automáticamente
+    const remove = () => {
         notification.classList.add('slide-out');
         setTimeout(() => notification.remove(), 300);
-    });
+    };
 
-    setTimeout(() => {
-        if (notification.parentNode) {
-            notification.classList.add('slide-out');
+    setTimeout(remove, 5000);
 }
 
 /**
@@ -50,7 +51,7 @@ export function saveToLocalStorage(email, data) {
         if (!emailExists) {
             existing.push({ ...data, date: new Date().toISOString() });
             localStorage.setItem('ecomarket_waitlist', JSON.stringify(existing));
-            console.log('💾 Guardado en localStorage');
+            console.debug('💾 Guardado en localStorage');
         }
     } catch (e) {
         console.warn('⚠️ No se pudo guardar en localStorage:', e);
@@ -90,5 +91,27 @@ export function checkAuthStatus() {
     if ((currentPage.includes('login.html') || currentPage.includes('register.html')) && token) {
         window.location.href = 'dashboard.html';
         return;
+    }
+}
+
+/// utilitarios DOM
+export const $ = selector => document.querySelector(selector);
+export const $id = id => document.getElementById(id);
+
+/**
+ * Cambia el estado de un botón para mostrar que hay un proceso en curso
+ * @param {HTMLButtonElement} button
+ * @param {boolean} loading
+ * @param {string=} textTexto opcional para el estado de carga
+ */
+export function setButtonLoading(button, loading, text) {
+    if (!button) return;
+    if (loading) {
+        button.dataset._orig = button.textContent;
+        button.textContent = text || '⏳ Procesando...';
+        button.disabled = true;
+    } else {
+        if (button.dataset._orig) button.textContent = button.dataset._orig;
+        button.disabled = false;
     }
 }

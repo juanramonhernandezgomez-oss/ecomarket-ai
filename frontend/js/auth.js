@@ -3,7 +3,7 @@
 // ahora consume utilidades y el cliente Supabase como módulos
 
 import supabaseClient from './supabase-client.js';
-import { showNotification } from './utils.js';
+import { showNotification, $id, setButtonLoading } from './utils.js';
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -14,24 +14,22 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function initLoginForm() {
-    const loginForm = document.getElementById('loginForm');
+    const loginForm = $id('loginForm');
     if (!loginForm) return;
 
     loginForm.addEventListener('submit', async function (e) {
         e.preventDefault();
 
-        const email = document.getElementById('loginEmail').value.trim();
-        const password = document.getElementById('loginPassword').value;
+        const email = $id('loginEmail').value.trim();
+        const password = $id('loginPassword').value;
         const button = loginForm.querySelector('button[type="submit"]');
-        const originalText = button.textContent;
 
         if (!email || !password) {
             showNotification('Por favor, completa todos los campos', 'error');
             return;
         }
 
-        button.textContent = '⏳ Iniciando sesión...';
-        button.disabled = true;
+        setButtonLoading(button, true, '⏳ Iniciando sesión...');
 
         try {
             const { data, error } = await supabaseClient.auth.signInWithPassword({
@@ -48,31 +46,27 @@ function initLoginForm() {
 
             showNotification('✅ ¡Bienvenido de nuevo!', 'success');
 
-            setTimeout(() => {
-                window.location.href = 'dashboard.html';
-            }, 1000);
+            setTimeout(() => window.location.href = 'dashboard.html', 1000);
         } catch (error) {
-            console.error('❌ Error de login:', error);
             showNotification('❌ ' + (error.message || 'Error al iniciar sesión'), 'error');
-            button.textContent = originalText;
-            button.disabled = false;
+        } finally {
+            setButtonLoading(button, false);
         }
     });
 }
 
 function initRegisterForm() {
-    const registerForm = document.getElementById('registerForm');
+    const registerForm = $id('registerForm');
     if (!registerForm) return;
 
     registerForm.addEventListener('submit', async function (e) {
         e.preventDefault();
 
-        const email = document.getElementById('registerEmail').value.trim();
-        const password = document.getElementById('registerPassword').value;
-        const name = document.getElementById('registerName')?.value.trim() || '';
-        const experience = document.getElementById('registerExperience')?.value || 'beginner';
+        const email = $id('registerEmail').value.trim();
+        const password = $id('registerPassword').value;
+        const name = $id('registerName')?.value.trim() || '';
+        const experience = $id('registerExperience')?.value || 'beginner';
         const button = registerForm.querySelector('button[type="submit"]');
-        const originalText = button.textContent;
 
         if (!email || !password) {
             showNotification('Por favor, completa email y contraseña', 'error');
@@ -84,8 +78,7 @@ function initRegisterForm() {
             return;
         }
 
-        button.textContent = '⏳ Creando cuenta...';
-        button.disabled = true;
+        setButtonLoading(button, true, '⏳ Creando cuenta...');
 
         try {
             const { data, error } = await supabaseClient.auth.signUp({
@@ -104,25 +97,21 @@ function initRegisterForm() {
             console.log('✅ Registro exitoso:', data.user.email);
 
             showNotification('✅ ¡Cuenta creada! Revisa tu email para verificar.', 'success');
-
-            setTimeout(() => {
-                window.location.href = 'login.html';
-            }, 2000);
+            setTimeout(() => window.location.href = 'login.html', 2000);
         } catch (error) {
-            console.error('❌ Error de registro:', error);
             let message = error.message || 'Error al crear cuenta';
             if (error.message?.includes('User already registered')) {
                 message = '⚠️ Este email ya está registrado';
             }
             showNotification('❌ ' + message, 'error');
-            button.textContent = originalText;
-            button.disabled = false;
+        } finally {
+            setButtonLoading(button, false);
         }
     });
 }
 
 function initLogout() {
-    const logoutBtn = document.getElementById('logoutBtn');
+    const logoutBtn = $id('logoutBtn');
     if (!logoutBtn) return;
 
     logoutBtn.addEventListener('click', async function (e) {
@@ -134,12 +123,8 @@ function initLogout() {
             localStorage.removeItem('ecomarket_user');
 
             showNotification('✅ Sesión cerrada correctamente', 'success');
-
-            setTimeout(() => {
-                window.location.href = 'index.html';
-            }, 1000);
+            setTimeout(() => window.location.href = 'index.html', 1000);
         } catch (error) {
-            console.error('❌ Error al cerrar sesión:', error);
             showNotification('Error al cerrar sesión', 'error');
         }
     });
