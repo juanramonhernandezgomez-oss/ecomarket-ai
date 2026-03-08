@@ -1,0 +1,32 @@
+name: Deploy /dev branch to staging
+
+on:
+  push:
+    branches:
+      - refactor/frontend-utils
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          ref: refactor/frontend-utils
+      
+      - name: Sync frontend to dev folder
+        run: |
+          mkdir -p dev
+          cp -r frontend/* dev/
+          echo "Deployed refactor/frontend-utils to /dev"
+      
+      - name: Deploy to Render via webhook
+        env:
+          RENDER_DEPLOY_WEBHOOK: ${{ secrets.RENDER_DEV_WEBHOOK }}
+        run: |
+          if [ -n "$RENDER_DEPLOY_WEBHOOK" ]; then
+            curl -X POST "$RENDER_DEPLOY_WEBHOOK"
+            echo "Webhook triggered for /dev deployment"
+          else
+            echo "Webhook URL not configured. Manual deployment needed."
+          fi

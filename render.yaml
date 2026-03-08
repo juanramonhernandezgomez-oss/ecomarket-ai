@@ -3,9 +3,9 @@ services:
   - type: web
     name: ecomarket-ai
     env: static
-    rootDir: frontend
-    buildCommand: ""
-    publishPath: ./
+    rootDir: .
+    buildCommand: "bash build.sh"
+    publishPath: ./public
     
     domains:
       - ecomarket-ai.es

@@ -1,0 +1,6 @@
+# Redirect root domain
+https://ecomarket-ai.es/* https://www.ecomarket-ai.es/:splat 301!
+
+# SPA routing - /dev path
+/dev/* /dev/index.html 200
+/* /index.html 200

@@ -1,0 +1,23 @@
+# netlify.toml - Configuración para despliegue automático en Netlify
+# Esto permite deploy preview automático de Ramas (ej: refactor/frontend-utils en /dev)
+
+[build]
+  command = ""
+  publish = "frontend"
+
+[build.environment]
+  YARN_VERSION = "1.22.0"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Headers de seguridad
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Strict-Transport-Security = "max-age=31536000; includeSubDomains"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://esm.sh https://www.googletagmanager.com; style-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com; font-src 'self' https://fonts.googleapis.com https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://esm.sh https://huvnjjarkycddhxkwsna.supabase.co https://www.googletagmanager.com; base-uri 'self';"
