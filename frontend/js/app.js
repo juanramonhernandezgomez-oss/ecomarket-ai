@@ -1,6 +1,6 @@
 // app.js
-// módulo principal que inicializa la aplicación de landing
-// ahora reutiliza utilidades y consume supabase-client como módulo
+// Módulo principal que inicializa la aplicación de landing
+// Reutiliza utilidades y consume el cliente Supabase como módulo
 
 import supabaseClient from './supabase-client.js';
 import {
@@ -10,14 +10,14 @@ import {
     initSmoothScroll,
     checkAuthStatus,
     $id,
-    setButtonLoading
+    setButtonLoading,
+    getErrorMessage,
+    logError
 } from './utils.js';
 
-
 document.addEventListener('DOMContentLoaded', () => {
-    // inicialización básica
     if (!supabaseClient) {
-        console.error('No hay cliente de Supabase');
+        logError('app.main', new Error('No hay cliente de Supabase disponible'));
         return;
     }
 
@@ -39,7 +39,7 @@ function initWaitlistForm() {
         const successMessage = $id('successMessage');
 
         if (!email || !isValidEmail(email)) {
-            showNotification('Por favor, introduce un email válido', 'error');
+            showNotification('Por favor, introduce un email válido', 'warning');
             return;
         }
 
@@ -48,15 +48,14 @@ function initWaitlistForm() {
 
         try {
             const waitlistData = {
-                email: email,
+                email,
                 source: 'landing_page',
                 user_agent: navigator.userAgent,
                 ip_hash: 'anonymous_' + Date.now(),
                 status: 'pending'
             };
 
-
-            const { data, error } = await supabaseClient
+            const { error } = await supabaseClient
                 .from('waitlist')
                 .insert([waitlistData])
                 .select();
@@ -80,19 +79,13 @@ function initWaitlistForm() {
                 });
             }
         } catch (error) {
-            let message = 'Error al registrar. Intenta de nuevo.';
-            if (error.code === '23505' || error.message?.includes('duplicate')) {
-                message = '⚠️ Este email ya está registrado';
-            } else if (error.message?.includes('network')) {
-                message = '❌ Error de conexión. Verifica tu internet.';
-            } else if (error.message) {
-                message = '❌ ' + error.message;
-            }
-            showNotification(message, 'error');
+            logError('waitlistForm', error);
+            showNotification('❌ ' + getErrorMessage(error), 'error');
         } finally {
-            // pequeño delay para evitar envíos múltiples
-            setTimeout(() => setButtonLoading(button, false), 500);
-            emailInput.disabled = false;
+            setTimeout(() => {
+                setButtonLoading(button, false);
+                emailInput.disabled = false;
+            }, 500);
         }
     });
 }

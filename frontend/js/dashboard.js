@@ -1,7 +1,8 @@
 // dashboard.js
-// lógica específica de la página del dashboard
+// Lógica específica de la página del dashboard
+// Gestiona la interfaz y estado del usuario después de login
 
-import { $id } from './utils.js';
+import { $id, logError } from './utils.js';
 
 export function initDashboardPage() {
     document.addEventListener('DOMContentLoaded', () => {
